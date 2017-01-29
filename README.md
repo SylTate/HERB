@@ -2,6 +2,7 @@
 Hydroponic Educational Resource Base Design
 
 Dependencies:
+
 1. Arduino
 
     DHT library - https://github.com/adafruit/DHT-sensor-library
