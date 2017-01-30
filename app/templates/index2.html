@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% include 'flash.html' %}
+{% block content %}
+    {% for section in data %}
+    <p>
+      {{ section.title }}  <b>{{ section.colors }}</b>
+    </p>
+    {% endfor %}
+{% endblock %}

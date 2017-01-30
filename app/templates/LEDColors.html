@@ -1,0 +1,27 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+{% block content %}
+{% include 'flash.html'%}
+<div class = "well">
+<h1> SET Color </h1>
+ <form class = "form" action="" method="post" name="SetColors">
+	 {{ form.hidden_tag()}}
+	 <p>
+	   Please enter Red value <br>
+	   {{ form.Red()}}<br>
+	 </p>
+	 <p>
+	   Please enter Green value <br>
+	   {{ form.Green()}}<br>
+	 </p>
+	 <p>
+	   Please enter Blue value <br>
+	   {{ form.Blue()}}<br>
+	  </p>
+	 <p><input type ="submit" value ="Set Color">
+ </form>
+ </div>
+ {% endblock %}
+
+
+	 
