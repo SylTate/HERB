@@ -1,7 +1,7 @@
 from flask import render_template,flash,redirect
 from app import app
 from .forms import LEDColorForm
-from app import db,models,comHandler
+from app import db,models
 import datetime
 #from app import LEDControl
 
@@ -30,13 +30,15 @@ def setColors():
         if form.validate_on_submit():
                 flash('LED Data Posted R=%d, G=%d, B=%d' %
                      (form.Red.data, form.Green.data, form.Blue.data))
+        return redirect('/index')   
                # comHandler = LEDControl.ArduinoLEDCom("3")
-                if comHandler.setLEDColors(form.Red.data,form.Green.data, form.Blue.data):
-
-                        return redirect('/index')
-        return render_template('LEDColors.html',
-                               title = 'Set Colors',
-                                form = form)
+                #uncomment
+                #if comHandler.setLEDColors(form.Red.data,form.Green.data, form.Blue.data):
+#uncomment
+                 
+       # return render_template('LEDColors.html',
+                           #    title = 'Set Colors',
+                             #   form = form)
 
 def generateFakeData():
         colors =models.LEDColors.query.all()
