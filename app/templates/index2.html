@@ -1,9 +1,58 @@
-{% extends "base.html" %}
+f{% extends "base.html" %}
 {% include 'flash.html' %}
 {% block content %}
-    {% for section in data %}
-    <p>
-      {{ section.title }}  <b>{{ section.colors }}</b>
-    </p>
-    {% endfor %}
-{% endblock %}
+
+<style>
+  #streamingdata {
+    text-align: center;
+  }
+</style>
+<div id="streamingdata">nothing received yet</div>
+<div id="streamingdata2">nothing received yet</div>
+
+ <script src="/static/js/chart.min.js"></script>
+<canvas id="myChart"></canvas>
+<canvas id="myChart2"></canvas>
+<script language="JavaScript">
+  $(function () {
+  	var data = {{ indata|tojson }};
+    
+    var option = {
+    responsive: true,
+    };
+   
+    // Get the context of the canvas element we want to select
+    var ctx = document.getElementById("myChart").getContext('2d');
+    var ctx2 = document.getElementById("myChart2").getContext('2d');
+    var myLineChart = new Chart(ctx).Line(data, option); //'Line' defines type of the chart.
+    var mySecondChart = new Chart(ctx2).Line(data, option); //'Line' defines type
+});
+</script>
+
+<style>
+  streamingdata {
+    text-align: center;
+  }
+</style>
+
+<script language="JavaScript">
+  if (!!window.EventSource) {
+     alert("I got here")
+    var source = new EventSource('/getStream');
+    source.onmessage = function(e) {
+       console.log(e.data)
+     var obj = JSON.parse(e.data);
+    $("#streamingdata").text(obj.msg); 
+
+  }
+}
+    /*source.addEventListener("liveData", function(e) {
+      console.log("I got something")
+      var obj = JSON.parse(e.data);
+      $("#streamingdata2").text(obj.temp); 
+        },true);
+ 
+}*/
+</script>
+
+ {% endblock %}

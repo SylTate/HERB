@@ -1,0 +1,19 @@
+
+******waterCycle*************
+blue1 - solenoidvalve  ---------5
+green1 - submersible pump ------6
+
+************perilstaltic*****
+green2 - phup  ----------------10
+purple2-phdown ----------------11
+blue2- nutrients --------------12
+
+
+****sensors***
+white humidity ----------------2
+brown trig  -------------------8
+grey echo ---------------------9
+
+*****lights***
+datapin -----------------------3
+clockpin ----------------------4

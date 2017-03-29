@@ -15,4 +15,5 @@ class EnvVariables(db.Model):
         id = db.Column(db.Integer,index=True,primary_key = True)
         Temp = db.Column(db.Float,index=True)
         Humidity = db.Column(db.Float,index=True)
+        pH = db.Column(db.Float,index=True);
         timestamp = db.Column(db.DateTime)
