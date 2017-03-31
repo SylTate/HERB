@@ -23,6 +23,12 @@ class ArduinoCom:
             """Packs a python 4 byte unsigned integer to an arduino unsigned long"""
             return struct.pack('I', value)    #should check bounds
 
+        def fancyDemo(self) :
+             sentData = self.ser.write([b'F',chr(red)])
+                 if sentData != 1 :
+                         return false
+                 return True
+
         def sendData(self,data) :
                 sentData = self.ser.write(data)
                 if sentData != len(data):
@@ -127,7 +133,7 @@ def tests():
         #if comHandler.setHumidity(50) :
          #       print "Humidity :"
           #      print comHandler.getHumidity();
-        #comHandler.setLightPeriod(1);
+        comHandler.setLightPeriod(10);
 
 if __name__ == '__main__':
         tests() 
