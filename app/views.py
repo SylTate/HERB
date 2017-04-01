@@ -8,7 +8,7 @@ import datetime
 @app.route('/')
 @app.route('/index')
 def index():
-        color = {'color':100} # fake color 
+        color = {'color':100} # fake color
         data = [{'id': 0,
                  "title":"colors",
                 'colors':[0,0,0],
@@ -19,8 +19,8 @@ def index():
                                    data=data)
 @app.route('/dashboard')
 def dashboard():
-         
-       
+
+
         return  render_template ('index.html',
                                    temp=50)
 
@@ -30,12 +30,12 @@ def setColors():
         if form.validate_on_submit():
                 flash('LED Data Posted R=%d, G=%d, B=%d' %
                      (form.Red.data, form.Green.data, form.Blue.data))
-        return redirect('/index')   
+        return redirect('/index')
                # comHandler = LEDControl.ArduinoLEDCom("3")
                 #uncomment
                 #if comHandler.setLEDColors(form.Red.data,form.Green.data, form.Blue.data):
 #uncomment
-                 
+
        # return render_template('LEDColors.html',
                            #    title = 'Set Colors',
                              #   form = form)
@@ -63,9 +63,9 @@ def chart():
         values = []
         for color in colors:
                 labels.append(color.timestamp)
-                print color.Red
+                print( color.Red)
                 values.append(color.Red)
-        return render_template('chart.html',values=values, labels=labels) 
+        return render_template('chart.html',values=values, labels=labels)
 
 @app.route("/charts")
 def charts():
@@ -75,7 +75,7 @@ def charts():
         data = [400,500,700,300,299]
         for color in colors:
                 labels.append(color.timestamp)
-                print color.Red
+                print (color.Red)
                 values.append(color.Red)
-        return render_template('charts.html',values=values, labels=labels, indata=data) 
+        return render_template('charts.html',values=values, labels=labels, indata=data)
 
