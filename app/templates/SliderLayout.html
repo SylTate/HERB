@@ -1,0 +1,85 @@
+
+{% extends "base2.html" %}
+{% block content %}
+ <link href="/static/css/bootstrap-slider.css" rel="stylesheet">
+ <link href="/static/css/RGBSlider.css" rel="stylesheet">
+<div class = "row">
+	<div class="col-lg-12">
+			<h1 class="page-header">Lighting</h1>
+	</div>
+	<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Growing Environment Overview</div>
+					<div class="panel-body">
+						<div class="canvas-wrapper">
+							<canvas class="main-chart" id="line-chart" height="200" width="600"></canvas>
+						</div>
+					</div>
+				</div>
+			</div>
+	</div><!--/.row-->
+</div>
+<div class="row">
+	<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-white panel-widget ">
+					<div class="row no-padding">
+						<div class="col-sm-9 col-lg-7 widget-left">
+							<p>
+							<b>R</b> <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="128" data-slider-id="RC" id="R" data-slider-tooltip="hide" data-slider-handle="square" />
+							</p>
+						</div>
+						<div class="col-sm-3 col-lg-5 widget-right">
+							<div id = "red_slider_text"class="large">128</div>
+							<div class="text-muted">Current value</div>
+						</div>
+					</div>
+				</div>
+	</div>
+	<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-white panel-widget ">
+					<div class="row no-padding">
+						<div class="col-sm-9 col-lg-7 widget-left">
+							<p>
+							<b>G</b> <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="128" data-slider-id="GC" id="G" data-slider-tooltip="hide" data-slider-handle="square" />
+							</p>
+						</div>
+						<div class="col-sm-3 col-lg-5 widget-right">
+							<div id = "green_slider_text"class="large">128</div>
+							<div class="text-muted">current value</div>
+						</div>
+					</div>
+				</div>
+	</div>
+	<div class="col-xs-12 col-md-6 col-lg-3">
+				<div class="panel panel-white panel-widget ">
+					<div class="row no-padding">
+						<div class="col-sm-9 col-lg-7 widget-left">
+							<p>
+							<b>B</b> <input type="text" class="span2" value="" data-slider-min="0" data-slider-max="255" data-slider-step="1" data-slider-value="128" data-slider-id="BC" id="B" data-slider-tooltip="hide" data-slider-handle="square" />
+							</p>
+						</div>
+						<div class="col-sm-3 col-lg-5 widget-right">
+							<div id = "blue_slider_text"class="large">120</div>
+							<div class="text-muted">Current value</div>
+						</div>
+					</div>
+				</div>
+	</div>
+
+</div>
+<div id="RGB" class = "row"></div>
+<form id = "light_timer_form"> 
+ <div class="form-group">
+    <label for="light_timer_form">Light Time</label>
+    <input type="number" class="form-control" id="light_timer_input" aria-describedby="light_timer_description" placeholder="Enter time in hours" name="light_time" step="any">
+    <small id="light_timer_description" class="form-text text-muted">The lights will turn off after this time.
+    </small>
+ </div>
+	<button type="submit" id ="light_timer_submit_button" class="btn btn-primary">Submit</button>
+</form>
+
+ 
+ <script src="/static/js/bootstrap-slider.js"></script>
+ <script src="/static/js/RGBSlider.js"></script>
+ {% endblock %}

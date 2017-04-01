@@ -6,9 +6,16 @@
 #define DHTTYPE DHT22   // DHT 22  (AM2302), AM2321
 DHT dht(DHTPIN, DHTTYPE);
 //LED Variables
+typedef union{
+  float val;
+  byte bytes[4];
+} FLOATUNION_t;
 byte RedBrightness;
 byte GreenBrightness;
 byte BlueBrightness;
+byte targetHumidity;
+FLOATUNION_t targetTemp;
+byte targetPh;
 int redPin = 8;
 int greenPin = 9;
 int bluePin = 10;
@@ -91,8 +98,10 @@ void waterCycle() {
     submersiblePumpState = LOW;
     }
   }
-  
-void getTemp() {
+void getTemp () {
+  Serial.write(targetTemp.bytes)
+}
+void getTemp1() {
   float t = dht.readTemperature(true);
   //try reading 2 times and if it fails send error
   int i = 0;
@@ -114,7 +123,18 @@ void getHumidity() {
    Serial.println(h);
   }
   
- 
+void setTargetTemp() {
+  byte temp[1];
+  int bytesRead = Serial.readBytes(temp,1)
+    if (bytesRead != 1) {
+    Serial.println('N');
+    }
+    else {
+    Serial.println('A');
+    targetTemp.number = (float)temp[0];
+    }
+}
+
 void setTargetColor() {
   byte  colors[3]; //first byte is red second is green third is blue
   int bytesRead = Serial.readBytes(colors,3);
@@ -239,6 +259,8 @@ if(Serial.available() > 0) {
       case('t'):
         getTemp();
         break;
+      case('T')
+        setTargetTemp();
       case('h'):
         getHumidity();
         break;

@@ -6,3 +6,9 @@ class LEDColorForm(Form):
             Red = IntegerField('Red', validators=[DataRequired()])
             Green = IntegerField('Green', validators=[DataRequired()])
             Blue = IntegerField('Blue', validators=[DataRequired()])
+class WaterCycleForm(Form):
+            emptyTime = IntegerField('emptyTime', validators=[DataRequired()])
+            fullTime = IntegerField('fullTime', validators=[DataRequired()])
+
+
+        	
