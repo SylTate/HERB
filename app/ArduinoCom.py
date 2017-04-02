@@ -11,13 +11,13 @@ class ArduinoCom:
                         self.ser.timeout = 3
                         self.ser.open()
                         time.sleep(2)
-                        print "initializing serial commnuication"
+                        print ("initializing serial commnuication")
                         if self.ser.is_open :
-                             print "done... connected to serial port:"
+                             print ( "done... connected to serial port:")
                              print (self.ser.name)
                 except serial.SerialException as e:
-                     print "could not open the serial port"
-                  
+                     print ("could not open the serial port")
+
 
         def packIntegerAsULong(value):
             """Packs a python 4 byte unsigned integer to an arduino unsigned long"""
@@ -25,9 +25,9 @@ class ArduinoCom:
 
         def fancyDemo(self) :
              sentData = self.ser.write([b'F',chr(red)])
-                 if sentData != 1 :
-                         return false
-                 return True
+             if sentData != 1 :
+                 return false
+             return True
 
         def sendData(self,data) :
                 sentData = self.ser.write(data)
@@ -36,7 +36,7 @@ class ArduinoCom:
                 line = self.ser.readline()
                 return ('A' in line)
 
-        #sends target RGB values to the arduino returns whether or not the write was succesfull 
+        #sends target RGB values to the arduino returns whether or not the write was succesfull
         def setLEDColors(self,red, green, blue) :
                  sentData = self.ser.write([b'j',chr(red),chr(green),chr(blue)])
                  if sentData != 4 :
@@ -44,7 +44,7 @@ class ArduinoCom:
                  line = self.ser.readline()
                  return ('A' in line)
 
-        #sends target RGB values to the arduino returns whether or not the write was succesfull 
+        #sends target RGB values to the arduino returns whether or not the write was succesfull
         def setWaterCycle(self,emptyTime,fullTime) :
                  sentData = self.ser.write([b'W',chr(emptyTime),chr(fullTime)])
                  if sentData != 3 :
@@ -68,7 +68,7 @@ class ArduinoCom:
                 sentData = self.ser.write(light_period_string)
                 if (sentData != len(light_period_string)) :
                         return false;
-                
+
                 ##self.ser.write(light_period_string + '\n')
                 line = self.ser.readline()
                 return ('A' in line)
@@ -93,7 +93,7 @@ class ArduinoCom:
                     sentData = self.ser.write('t')
                     if sentData != 1 :
                              raise ValueError(sentData)
-                    output = self.ser.readline() 
+                    output = self.ser.readline()
                     #return struct.unpack('f',output)[0];
                     return output
                 return 0.0
@@ -112,17 +112,17 @@ class ArduinoCom:
 def tests():
         comHandler = ArduinoCom("3")
 
-        print comHandler.getLEDColors()
+        print (comHandler.getLEDColors())
         for i in range(0,256,50):
                 if comHandler.setLEDColors(i,i+1,i+2):
                            # print (ser.write(b'g'))
                            # print ser.read(size=1)
                            # print ser.read(size=1)
                            # print ser.read(size=1)a
-                           print comHandler.getLEDColors()
+                           print (comHandler.getLEDColors())
                            time.sleep(3)
                 else :
-                        print "sending failed"
+                        print( "sending failed")
         #test sending and getting temperature
        # if comHandler.setTemp(50) :
         #        print "temp"
@@ -136,9 +136,9 @@ def tests():
         comHandler.setLightPeriod(10);
 
 if __name__ == '__main__':
-        tests() 
+        tests()
 
 
 
 
-         
+

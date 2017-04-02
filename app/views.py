@@ -61,7 +61,7 @@ def streamer():
                 #time.sleep(.1)  # an artificial delay)
                 #yield "data:  %s %s\n\n event: liveData\n data: {temp: %s,humidity: %s}\n\n" % (c,"hello" ,c,"hello" )
                 output = "data: {\ndata: \"temp\": %f,\ndata: \"humidity\": %f \ndata:}\n\n"%(i,j)
-                print output
+                print (output)
                 yield output
                 time.sleep(4)  # an artificial delay
         return Response(events(), content_type='text/event-stream')

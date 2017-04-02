@@ -9,7 +9,7 @@ class ArduinoLEDCom:
         def __init__(self,port,sleeptime = 2):
 
                 self.ser = serial.Serial('/dev/tty.usbserial-A1016O16',timeout = 10)
-                print "initializing serial commnuication"
+                print( "initializing serial commnuication")
                 time.sleep(2)
                 if self.ser.is_open :
                         print ("done... connected to serial port:")
@@ -27,7 +27,7 @@ class ArduinoLEDCom:
                 return ('A' in line)
 
 
-        #sends target RGB values to the arduino returns whether or not the write was succesfull 
+        #sends target RGB values to the arduino returns whether or not the write was succesfull
         def setLEDColors(self,red, green, blue) :
                  sentData = self.ser.write([b'j',chr(red),chr(green),chr(blue)])
                  if sentData != 4 :
@@ -108,7 +108,7 @@ def tests():
                 #print line
                  #test sending and getting temperature
         if comHandler.setTemp(50) :
-                print comHandler.getTemp();
+                print( comHandler.getTemp())
 
 if __name__ == '__main__':
         tests()
