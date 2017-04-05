@@ -36,7 +36,7 @@ class ArduinoCom:
 
                      print ("could not open the serial port")
                 if (db) :
-                        t = threading.Thread(target=getData(db))
+                        t = threading.Thread(target=getData, args = (db,))
                         t.start(); 
                   
         def packIntegerAsULong(value):
