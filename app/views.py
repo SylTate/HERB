@@ -9,7 +9,7 @@ comHandler = ArduinoCom.ArduinoCom("3", db = db)
 @app.route('/')
 @app.route('/index')
 def index():
-        color = {'color':100} # fake color 
+        color = {'color':100} # fake color
         data = {
                 "labels": ["January", "February", "March", "April", "May", "June", "July"],
                     "datasets": [
@@ -39,7 +39,7 @@ def index():
                                   title = 'Home',
                                   color=color,
                                     indata = data)
-  
+
 @app.route('/getEnvironmentData',methods = ['GET'])
 def getEnvironmentData ():
     temp = [200,300,100,50,700,250,100];
@@ -61,18 +61,18 @@ def streamer():
                 #time.sleep(.1)  # an artificial delay)
                 #yield "data:  %s %s\n\n event: liveData\n data: {temp: %s,humidity: %s}\n\n" % (c,"hello" ,c,"hello" )
                 output = "data: {\ndata: \"temp\": %f,\ndata: \"humidity\": %f \ndata:}\n\n"%(i,j)
-                print output
+                print (output)
                 yield output
                 time.sleep(4)  # an artificial delay
         return Response(events(), content_type='text/event-stream')
 
 
-   
+
 
 @app.route('/dashboard')
 def dashboard():
-         
-       
+
+
         return  render_template ('index.html',
                                    temp=50)
 
@@ -84,22 +84,30 @@ def setColors():
                 if comHandler.setLEDColors(form.Red.data,form.Green.data, form.Blue.data):
                     flash('LED Data Posted R=%d, G=%d, B=%d' %
                      (form.Red.data, form.Green.data, form.Blue.data))
+               # comHandler = LEDControl.ArduinoLEDCom("3")
+                #uncomment
+                #if comHandler.setLEDColors(form.Red.data,form.Green.data, form.Blue.data):
+#uncomment
+
+       # return render_template('LEDColors.html',
+                           #    title = 'Set Colors',
+                             #   form = form)
                 else:
                      flash('LED Data Posting failed')
                 comHandler.ser.close();
-                return redirect('/index')         
+                return redirect('/index')
         return render_template('LEDColors.html',
                              title = 'Set Colors',
                              form = form)
 
-@app.route('/setLightPeriod',methods = ['GET','POST'])       
+@app.route('/setLightPeriod',methods = ['GET','POST'])
 def setLightPeriod() :
     comHandler.setLightPeriod(request.json["light_time"])
     print(request.json["light_time"])
     return jsonify({"light_time":request.json['light_time']})
 
 @app.route('/setColorsJSON', methods = ['POST'])
-def setColorsHeadless() : 
+def setColorsHeadless() :
     if not request.json or not ('Red' in request.json  or 'Green' in request.json or 'Blue' in request.json) :
         print(request.json)
         abort(400)
@@ -107,7 +115,7 @@ def setColorsHeadless() :
         print(request.json)
     return jsonify({"Red":request.json['Red'], "Green":request.json['Green'],"Blue":request.json['Blue']})
 
-@app.route('/Slider') 
+@app.route('/Slider')
 def RenderSlider():
     return render_template('SliderLayout.html')
 
@@ -118,7 +126,7 @@ def waterCycle():
                 if comHandler.setWaterCycle(form.emptyTime.data,form.fullTime.data):
                     flash('water cycle time set empty=%d, full=%d' %
                      (form.emptyTime.data,form.fullTime.data))
-                return redirect('/index')         
+                return redirect('/index')
         return render_template('waterCycle.html',
                              title = 'Set Water Cylce',
                                form = form)
@@ -146,9 +154,9 @@ def chart():
         values = []
         for color in colors:
                 labels.append(color.timestamp)
-                print color.Red
+                print( color.Red)
                 values.append(color.Red)
-        return render_template('chart.html',values=values, labels=labels) 
+        return render_template('chart.html',values=values, labels=labels)
 
 @app.route("/charts")
 def charts():
@@ -158,7 +166,7 @@ def charts():
         data = [400,500,700,300,299]
         for color in colors:
                 labels.append(color.timestamp)
-                print color.Red
+                print (color.Red)
                 values.append(color.Red)
-        return render_template('charts.html',values=values, labels=labels, indata=data) 
+        return render_template('charts.html',values=values, labels=labels, indata=data)
 

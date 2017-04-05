@@ -2,14 +2,17 @@ import sys
 import serial
 import time
 import struct
+
+
 class ArduinoLEDCom:
 
         def __init__(self,port,sleeptime = 2):
+
                 self.ser = serial.Serial('/dev/tty.usbserial-A1016O16',timeout = 10)
-                print "initializing serial commnuication"
+                print( "initializing serial commnuication")
                 time.sleep(2)
                 if self.ser.is_open :
-                        print "done... connected to serial port:"
+                        print ("done... connected to serial port:")
                         print (self.ser.name)
 
         def packIntegerAsULong(value):
@@ -23,7 +26,8 @@ class ArduinoLEDCom:
                 line = self.ser.readline()
                 return ('A' in line)
 
-        #sends target RGB values to the arduino returns whether or not the write was succesfull 
+
+        #sends target RGB values to the arduino returns whether or not the write was succesfull
         def setLEDColors(self,red, green, blue) :
                  sentData = self.ser.write([b'j',chr(red),chr(green),chr(blue)])
                  if sentData != 4 :
@@ -73,9 +77,9 @@ class ArduinoLEDCom:
 
 def tests():
         comHandler = ArduinoLEDCom("3")
+        print( comHandler.getLEDColors())
+        for i in range(0,255,30):
 
-        print comHandler.getLEDColors()
-        for i in range(0,255,255):
                # ser = serial.Serial('/dev/tty.usbserial-A1016O16')
                # time.sleep(2)
                # print ser.write([b'j',chr(i),chr(i+1),chr(i+2)])
@@ -84,7 +88,7 @@ def tests():
                 #print(ser.write(chr(i+1)))
                # while ser.inWaiting() < 1:
                 #        print "waiting for response \n"
-                
+
                # line = ser.readline()
                # print list(line)
                 if comHandler.setLEDColors(i,i+1,i+2):
@@ -92,13 +96,19 @@ def tests():
                            # print ser.read(size=1)
                            # print ser.read(size=1)
                            # print ser.read(size=1)a
-                           print comHandler.getLEDColors()
+                           print (comHandler.getLEDColors())
                            time.sleep(5)
                 else :
-                        print "sending failed"
+
+                        print ("sending failed")
+               # print bytes(line)
+                #line = ser.readline()
+               # print line
+                #line = ser.readline()
+                #print line
                  #test sending and getting temperature
         if comHandler.setTemp(50) :
-                print comHandler.getTemp();
+                print( comHandler.getTemp())
 
 if __name__ == '__main__':
         tests()
@@ -106,4 +116,4 @@ if __name__ == '__main__':
 
 
 
-         
+
