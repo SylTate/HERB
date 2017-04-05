@@ -1,10 +1,10 @@
-from flask import render_template,flash,redirect,url_for,Response,request,jsonify
+from flask import render_template,flash,redirect,url_for,Response,request,jsonify,json
 from app import app
 from .forms import LEDColorForm,WaterCycleForm
 from app import db,models
 import datetime,itertools,time
 from app import ArduinoCom
-comHandler = ArduinoCom.ArduinoCom("3")
+comHandler = ArduinoCom.ArduinoCom("3", db = db)
 
 @app.route('/')
 @app.route('/index')
@@ -94,7 +94,8 @@ def setColors():
 
 @app.route('/setLightPeriod',methods = ['GET','POST'])       
 def setLightPeriod() :
-    print(request.json)
+    comHandler.setLightPeriod(request.json["light_time"])
+    print(request.json["light_time"])
     return jsonify({"light_time":request.json['light_time']})
 
 @app.route('/setColorsJSON', methods = ['POST'])
@@ -114,7 +115,6 @@ def RenderSlider():
 def waterCycle():
         form = WaterCycleForm()
         if form.validate_on_submit():
-                comHandler = ArduinoCom.ArduinoCom("3")
                 if comHandler.setWaterCycle(form.emptyTime.data,form.fullTime.data):
                     flash('water cycle time set empty=%d, full=%d' %
                      (form.emptyTime.data,form.fullTime.data))

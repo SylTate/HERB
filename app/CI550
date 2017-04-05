@@ -1,0 +1,1 @@
+sqlplus 'instructor@(DESCRIPTION=(ADDRESS=(PROTOCOL=TCP)(HOST=finalprojectcis550.c6wetbpb49dv.us-west-2.rds.amazonaws.com)(PORT=3306))(CONNECT_DATA=(SID=nbaSQL)))';

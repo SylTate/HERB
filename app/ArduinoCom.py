@@ -2,9 +2,12 @@ import sys
 import serial
 import time
 import struct
+import threading
+import datetime
 class ArduinoCom:
-
-        def __init__(self,port,sleeptime = 2):
+        SAMPLE_TIME = 60
+        def __init__(self,port,sleeptime = 2, db = None):
+                #self.lock = threading.lock();
                 self.ser = serial.Serial();
                 try:
                         self.ser.port = '/dev/tty.usbserial-A1016O16'
@@ -17,17 +20,35 @@ class ArduinoCom:
                              print (self.ser.name)
                 except serial.SerialException as e:
                      print "could not open the serial port"
+                if (db) :
+                        t = threading.Thread(target=getData(db))
+                        t.start(); 
                   
+def getData(db) :
+        from app import models
+        SAMPLE_TIME = 1
+        import random
+        while (1) :
+                time.sleep(SAMPLE_TIME);
+                u = models.EnvVariables(Temp = random.randrange(60,70,1), 
+                        Humidity = random.randrange(10,20,1), pH = random.randrange(4,9,1),
+                        timestamp=datetime.datetime.utcnow(),
+                        )
+                    #u = models.(Red=i,Blue=i+1,Green=i+2,timestamp=datetime.datetime.utcnow())
+                db.session.add(u)
+                db.session.commit()
+                
+                                
 
         def packIntegerAsULong(value):
             """Packs a python 4 byte unsigned integer to an arduino unsigned long"""
             return struct.pack('I', value)    #should check bounds
 
         def fancyDemo(self) :
-             sentData = self.ser.write([b'F',chr(red)])
-                 if sentData != 1 :
-                         return false
-                 return True
+                sentData = self.ser.write([b'F',chr(red)])
+                if sentData != 1 :
+                        return false
+                return True
 
         def sendData(self,data) :
                 sentData = self.ser.write(data)
@@ -108,21 +129,29 @@ class ArduinoCom:
                         output = self.ser.readline()
                         return output
                 return 0.0
+        
+
+
+
+
+
 
 def tests():
         comHandler = ArduinoCom("3")
-
-        print comHandler.getLEDColors()
-        for i in range(0,256,50):
-                if comHandler.setLEDColors(i,i+1,i+2):
+        ##do fancy demo
+        #print comHandler.getLEDColors()
+        #for i in range(0,256,50):
+         #       if comHandler.setLEDColors(i,i+1,i+2):
                            # print (ser.write(b'g'))
                            # print ser.read(size=1)
                            # print ser.read(size=1)
                            # print ser.read(size=1)a
-                           print comHandler.getLEDColors()
-                           time.sleep(3)
-                else :
-                        print "sending failed"
+          #                 print comHandler.getLEDColors()
+           #                time.sleep(3)
+            #    else :
+             #           print "sending failed"
+        ##tests for waterCycle
+        #comHandler.setWaterCycle(1,1);
         #test sending and getting temperature
        # if comHandler.setTemp(50) :
         #        print "temp"
@@ -133,7 +162,7 @@ def tests():
         #if comHandler.setHumidity(50) :
          #       print "Humidity :"
           #      print comHandler.getHumidity();
-        comHandler.setLightPeriod(10);
+        comHandler.setLightPeriod(1);
 
 if __name__ == '__main__':
         tests() 

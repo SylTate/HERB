@@ -6,4 +6,5 @@ app.config.from_object('config')
 db = SQLAlchemy(app)
 #comHandler = LEDControl.ArduinoLEDCom("3")
 from app import views,models
+#from app import models
 
